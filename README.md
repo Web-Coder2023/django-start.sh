@@ -13,4 +13,32 @@
 1. Склонируй репозиторий:
 
 ```bash
-git clone https://github.com/yourname/django-start.sh.git
+git clone https://github.com/Web-Coder2023/django-start.sh.git
+```
+
+2. Подключи функцию в свой .bashrc или .zshrc:
+```bash
+echo "source ~/django-start.sh/django_start.sh" >> ~/.bashrc
+source ~/.bashrc
+```
+Замените ~/django-start.sh/ на актуальный путь при необходимости.
+
+# Использование
+```bash
+django_start
+```
+
+Скрипт запросит:
+- Путь до каталога (по умолчанию: /home/текущий_пользователь/files)
+- Имя папки проекта
+- Имя конфигурационной папки проекта (по умолчанию: config)
+
+После этого:
+- создаст папку проекта
+- создаст виртуальное окружение
+- установит зависимости
+- создаст Django-проект
+
+создаст .env и requirements.txt
+
+активирует окружение
