@@ -182,6 +182,58 @@ if not User.objects.filter(username='$ADMIN_USERNAME').exists():
 " | python manage.py shell || { echo "❌ Ошибка создания суперпользователя"; exit 1; }
 echo "✅ Суперпользователь создан"
 
+# === Git инициализация ===
+read -p "Введите ссылку на удалённый Git-репозиторий (или оставьте пустым, чтобы пропустить): " GIT_REPO_URL
+
+cd "$PROJECT_PATH" || { echo "Не удалось перейти в $PROJECT_PATH"; exit 1; }
+
+# Создаём .gitignore
+cat > .gitignore <<'EOF'
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
+
+# Env
+.env
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+EOF
+echo "✅ Файл .gitignore создан"
+
+# Инициализация Git
+if [ ! -d ".git" ]; then
+  git init -b main
+  echo "✅ Git репозиторий инициализирован (ветка main)"
+fi
+
+git add .
+git commit -m "Initial Django project setup"
+echo "✅ Первый коммит создан"
+
+if [ -n "$GIT_REPO_URL" ]; then
+  git remote add origin "$GIT_REPO_URL"
+  echo "✅ Удалённый репозиторий подключён: $GIT_REPO_URL"
+fi
+
 echo ""
 echo "🎉 Django-проект успешно создан и настроен!"
 echo "📂 Путь: $PROJECT_PATH"
